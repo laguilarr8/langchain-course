@@ -25,13 +25,14 @@ def main():
         print("Asegúrate de haber guardado el archivo .env con la clave nueva.")
         return
 
-    information = "Keiko Fujimori ..."
+    information = "Nicolas Maquiavelo ..."
 
     summary_template = """
     dada la información {information} sobre una persona, quiero que crees:
     1. Un resumen corto
     2. dos datos interesantes sobre ella
     3. edad y patrimonio
+    4. mejores frases y libros
     """
 
     summary_prompt_template = PromptTemplate(
