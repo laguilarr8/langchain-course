@@ -14,7 +14,12 @@ from langchain.tools import tool
 from langchain_core.messages import HumanMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 
+from tavily import TavilyClient
+
 from langsmith import wrappers
+
+
+tavily = TavilyClient()
 
 @tool
 def search(query: str) -> str:
@@ -26,7 +31,9 @@ def search(query: str) -> str:
         The search result
     """
     print(f"Searching for {query}")
-    return "Tokyo weather is sunny"
+
+    return tavily.search(query = query)
+
 
 # Usamos el modelo estándar
 llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
@@ -35,8 +42,8 @@ agent = create_agent(model=llm, tools=tool)
 
 
 def main():
-    print("Hello from langchain-course!")
-    result = agent.invoke({"messages": [HumanMessage(content="What is the weather in Tokyo?")]})
+
+    result = agent.invoke({"messages": [HumanMessage(content="Search for 4 job postings for an ai engineer using langchain on linkedingt and list their details")]})
     print(result)
     
 
