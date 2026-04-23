@@ -13,37 +13,24 @@ from langchain.agents import create_agent
 from langchain.tools import tool
 from langchain_core.messages import HumanMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
-
-from tavily import TavilyClient
+from langchain_tavily import TavilySearch  # Herramienta de busqueda de Tavily
 
 from langsmith import wrappers
 
 
-tavily = TavilyClient()
 
-@tool
-def search(query: str) -> str:
-    """
-    Tool that searches over internet
-    Args:
-        query: The query to search for
-    Returns:
-        The search result
-    """
-    print(f"Searching for {query}")
 
-    return tavily.search(query = query)
 
 
 # Usamos el modelo estándar
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
-tool = [search]
+llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")   # gemini-2.5-pro  # gemini-2.5-flash
+tool = [TavilySearch()]
 agent = create_agent(model=llm, tools=tool)
 
 
 def main():
 
-    result = agent.invoke({"messages": [HumanMessage(content="Search for 4 job postings for an ai engineer using langchain on linkedingt and list their details")]})
+    result = agent.invoke({"messages": [HumanMessage(content="Search for 2 job postings for an ai engineer using langchain on linkedingt and list their details")]})
     print(result)
     
 
